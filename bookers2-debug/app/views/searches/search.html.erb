@@ -1,0 +1,55 @@
+<% if @range == "User" %>
+  <h2>Users search for "<%= @word %>"</h2>
+<% else %>
+  <h2>Books search for "<%= @word %>"</h2>
+<% end %>
+
+<table class='table'>
+  <% if @range == "User" %>
+    <% @users.each do |user| %>
+      <thead>
+        <tr>
+          <td>image</td>
+          <td>Name</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= image_tag user.get_profile_image, size:"50x50" %></td>
+          <td>
+            <%= link_to user_path(user) do %>
+              <%= user.name %>
+            <% end %>
+          </td>
+          <td>フォロー数: <%= user.follows.count %></td>
+          <td>フォロワー数: <%= user.followers.count %></td>
+        </tr>
+      </tbody>
+    <% end %>
+  <% elsif @range == "Book" %>
+    <% @books.each do |book| %>
+      <thead>
+        <tr>
+          <td>image</td>
+          <td>Title</td>
+          <td>Opinion</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= image_tag book.user.get_profile_image, size:'50x50' %></td>
+          <td>
+            <%= link_to book_path(book) do %>
+              <%= book.title %>
+            <% end %>
+          </td>
+          <td><%= book.body %></td>
+          <td></td>
+        </tr>
+      </tbody>
+    <% end %>
+  <% end %>
+</table>
